@@ -19,6 +19,8 @@ function ITG3200(options) {
     var _SMPLRT_DIV = 9,
         _DLPF_CFG = (0 << 2) | (1 << 1) | (1 << 0),
         _DLPF_FS_SEL = (1 << 3) | (1 << 4);
+
+    var _wire;
 }
 
 ITG3200.prototype.begin = function(callback) {
@@ -28,20 +30,20 @@ ITG3200.prototype.begin = function(callback) {
     var self = this;
     async.series([
         function(cb) {
-            self.wire.writeByte(self._REG_DLPF_FS, [self._DLPF_CFG | self._DLPF_FS_SEL], function(err) {
+            self._wire.writeByte(self._REG_DLPF_FS, [self._DLPF_CFG | self._DLPF_FS_SEL], function(err) {
                 if (err) cb(err);
                 else cb(null);
             });
         },
         function(cb) {
-            self.wire.writeByte(self._REG_SMPLRT_DIV, [self._SMPLRT_DIV], function(err) {
+            self._wire.writeByte(self._REG_SMPLRT_DIV, [self._SMPLRT_DIV], function(err) {
                 if (err) cb(err);
                 else cb(null);
             })
         },
         function(cb) {
-            self.wire.stream(self._REG_GYRO_OUT, 6, 10);
-            self.wire.on('data', function(data) {
+            self._wire.stream(self._REG_GYRO_OUT, 6, 10);
+            self._wire.on('data', function(data) {
                 self.emit('data', data);
             });
         }
