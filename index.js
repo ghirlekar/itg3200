@@ -25,6 +25,7 @@ ITG3200.prototype.begin = function(callback) {
     this._wire = new i2c(this._ADDRESS, {
         device: '/dev/i2c-1'
     });
+    var self = this;
     async.series([
         function(cb) {
             self.wire.writeByte(self._REG_DLPF_FS, [self._DLPF_CFG | self._DLPF_FS_SEL], function(err) {
