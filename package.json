@@ -1,0 +1,25 @@
+{
+  "name": "itg3200",
+  "version": "0.0.1",
+  "description": "Reads the output of a 3-axis ITG3200 gyroscope connected through I2C",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghirlekar/itg3200.git"
+  },
+  "keywords": [
+    "itg3200",
+    "i2c",
+    "imu",
+    "raspberrypi"
+  ],
+  "author": "ghirlekar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghirlekar/itg3200/issues"
+  },
+  "homepage": "https://github.com/ghirlekar/itg3200#readme"
+}
