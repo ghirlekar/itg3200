@@ -22,24 +22,24 @@ function ITG3200(options) {
 }
 
 ITG3200.prototype.begin = function(callback) {
-    this._wire = new i2c(_ADDRESS, {
+    this._wire = new i2c(this._ADDRESS, {
         device: '/dev/i2c-1'
     });
     async.series([
         function(cb) {
-            self.wire.writeByte(_REG_DLPF_FS, [_DLPF_CFG | _DLPF_FS_SEL], function(err) {
+            self.wire.writeByte(self._REG_DLPF_FS, [self._DLPF_CFG | self._DLPF_FS_SEL], function(err) {
                 if (err) cb(err);
                 else cb(null);
             });
         },
         function(cb) {
-            self.wire.writeByte(_REG_SMPLRT_DIV, [_SMPLRT_DIV], function(err) {
+            self.wire.writeByte(self._REG_SMPLRT_DIV, [self._SMPLRT_DIV], function(err) {
                 if (err) cb(err);
                 else cb(null);
             })
         },
         function(cb) {
-            self.wire.stream(_REG_GYRO_OUT, 6, 10);
+            self.wire.stream(self._REG_GYRO_OUT, 6, 10);
             self.wire.on('data', function(data) {
                 self.emit('data', data);
             });
