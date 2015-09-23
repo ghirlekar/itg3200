@@ -30,25 +30,19 @@ ITG3200.prototype.begin = function(callback) {
     var self = this;
     async.series([
         function(cb) {
-            self._wire.writeByte(self._REG_DLPF_FS, [self._DLPF_CFG | self._DLPF_FS_SEL], function(err) {
-                if (err) cb(err);
-                else cb(null);
-            });
+            self._wire.writeBytes(self._REG_DLPF_FS, [self._DLPF_CFG | self._DLPF_FS_SEL], cb);
         },
         function(cb) {
-            self._wire.writeByte(self._REG_SMPLRT_DIV, [self._SMPLRT_DIV], function(err) {
-                if (err) cb(err);
-                else cb(null);
-            })
+            self._wire.writeBytes(self._REG_SMPLRT_DIV, [self._SMPLRT_DIV], cb);
         },
         function(cb) {
             self._wire.stream(self._REG_GYRO_OUT, 6, 10);
             self._wire.on('data', function(data) {
                 self.emit('data', data);
             });
+            cb();
         }
-    ], function(err) {
-        if (err) callback(err);
-        else callback(null);
+    ], function(err, results) {
+        callback(err);
     });
 }
